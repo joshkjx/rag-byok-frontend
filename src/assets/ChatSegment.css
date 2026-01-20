@@ -1,0 +1,111 @@
+.chatContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.chatDisplay {
+    height:500px;
+    width: 800px;
+    border: 2px solid;
+    border-radius: 8px;
+    border-color: var(--tabs-border-color);
+    overflow-y: auto;
+    padding:0.5rem;
+    scroll-behavior: smooth;
+}
+
+.chatBox {
+    display: flex;
+    flex:1;
+    min-height: 25px;
+    border: 2px solid;
+    border-radius: 8px;
+    padding: 3px;
+    border-color: var(--tabs-border-color);
+    gap: 5px;
+    align-items: center;
+}
+
+.chatSendButton {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid;
+    border-color: var(--tabs-border-color);
+    background-color: var(--toggle-slider-bg);
+    border-radius: 8px;
+    text-justify: auto;
+    height: fit-content;
+    align-self: flex-start;
+}
+
+.chatSendButton:active {
+    background-color: var(--bg-secondary);
+}
+.chatSendButton:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+.chatSendButton:disabled:active {
+    background-color: var(--toggle-slider-bg);
+}
+.textInput {
+    width: 95%;
+    border: none;
+    padding: 0px 4px;
+    color: var(--default-text-color);
+    background-color: var(--bg-primary);
+    caret-color: var(--default-text-color);
+    min-height:25px;
+    max-height:300px;
+    font-family: inherit;
+    font-size: 1rem;
+    resize:none;
+}
+
+.textInput:focus {
+    outline: none;
+}
+
+.textInput:focus-visible {
+    outline: var(--tabs-focus-color);
+}
+
+.stickyQuery {
+    position:sticky;
+    top:0;
+    background: var(--bg-secondary);
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 2px solid var(--tabs-border-color);
+    border-radius: 16px;
+    z-index: 10;
+    color: var(--default-text-color);
+    font-weight: bold;
+    box-shadow: 0 -1rem 0 0 var(--bg-primary); /* Extend background upward to cover area above the box.*/
+}
+
+.queryResponse {
+    margin-bottom: 2rem;
+}
+
+.responseText h1, .response-text h2 {
+    margin-top: 1em;
+}
+
+.responseText {
+    text-align: justify;
+    line-height: 1.6;
+    margin-bottom: 3rem
+}
+
+.responseText * {
+    color: var(--default-text-color);
+}
+
+.qaPair {
+    position: relative;
+    margin-bottom: 2rem;
+}

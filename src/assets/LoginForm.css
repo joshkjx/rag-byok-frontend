@@ -1,0 +1,25 @@
+.loginForm {
+    display: flex;
+    flex-direction: column;
+}
+.loginForm button {
+    margin-top: 1rem;
+    color:var(--default-text-color);
+    background-color: var(--bg-secondary);
+    border-color: var(--tabs-border-color);
+}
+.loginForm button:hover {
+    border-color: var(--tabs-focus-color);
+}
+
+.loginForm p {
+    align-self: start;
+    color: var(--default-text-color);
+    margin-bottom: 0.2rem;
+    font-weight: bold;
+}
+
+.error {
+    color:red;
+    font-weight: bold;
+}

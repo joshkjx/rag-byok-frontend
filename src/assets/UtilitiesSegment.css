@@ -1,0 +1,83 @@
+.tabContainer {
+    display:flex;
+    flex-direction: column;
+}
+
+.loginContainer {
+    display:flex;
+    flex-direction: column;
+    flex:1;
+    height:40rem;
+    border: 2px solid;
+    border-radius: 8px;
+    border-color: var(--tabs-border-color);
+    padding: 0.5rem 0.5rem;
+}
+
+.loginContainer h2 {
+    color: var(--default-text-color);
+}
+
+.tabContents {
+    flex:1;
+    height:80rem;
+    border:2px solid;
+    background-color: var(--bg-primary);
+    border-radius: 0 0 8px 8px;
+    border-color: var(--border-color-active);
+    padding: 0.5rem 0.25rem
+}
+
+.tabs {
+    display: flex;
+    gap: 0;
+}
+
+.tabs button {
+    padding: 0.75rem 1.5rem;
+    border:2px solid var(--tabs-border-color);
+    border-bottom-color: var(--border-color-active);
+    border-radius: 8px 8px 0 0;
+    background:var(--bg-secondary);
+    cursor:pointer;
+    position: relative;
+    top:2px;
+    color: var(--default-text-color);
+}
+
+.tabs button:hover{
+    background: var(--tabs-hover-color);
+}
+
+.tabs button:focus {
+    outline: none;
+}
+
+.tabs button:focus-visible {
+    outline:2px solid var(--tabs-focus-color);
+    outline-offset: 0.5px;
+}
+
+.tabs button.active {
+    background: var(--bg-primary);
+    border-bottom: none;
+    border-color: var(--border-color-active);
+    font-weight: bold;
+    z-index: 1;
+}
+
+.documentPane {
+    display:flex;
+    flex-direction: column;
+    border: 2px solid;
+    border-color: var(--content-pane-border-colour);
+    border-radius: 6px;
+    padding: 5px 5px;
+    gap: 3px;
+}
+
+.documentRow {
+    border: 1px;
+    border-radius: 6px;
+    background-color: var(--bg-secondary);
+}
