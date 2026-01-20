@@ -1,4 +1,4 @@
-export const API_BASE_URL = // API endpoint URL - should end with '/api`
+export const API_BASE_URL = 'http://localhost:8000/api'
 export const API_ENDPOINTS = {
     QUERY: '/agent/query',
     SIGNUP: '/auth/signup',

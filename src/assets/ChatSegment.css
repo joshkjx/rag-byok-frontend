@@ -54,7 +54,7 @@
 .textInput {
     width: 95%;
     border: none;
-    padding: 0px 4px;
+    padding: 0 4px;
     color: var(--default-text-color);
     background-color: var(--bg-primary);
     caret-color: var(--default-text-color);

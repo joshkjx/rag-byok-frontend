@@ -16,7 +16,7 @@ export function ChatContainer() {
         if (scrollRef.current){
             scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
         }
-    };
+    }
 
     async function handleSend() {
         if (!currentInput.trim()) return;
