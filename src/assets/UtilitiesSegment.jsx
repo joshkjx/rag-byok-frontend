@@ -8,7 +8,7 @@ import {DocumentPane} from "./DocumentPane.jsx";
 
 export function TabContainer(){
     const [activeTab, setActiveTab] = useState('Documents');
-    const tabNames = ['Documents','Settings','Cost'];
+    const tabNames = ['Documents','Settings'];
     const { isLoggedIn } = useAuth();
 
     if (!isLoggedIn) {
