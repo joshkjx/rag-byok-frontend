@@ -20,7 +20,7 @@ export function AuthProvider({children}) {
                 setIsLoggedIn(true);
                 setUsername(response?.data?.username);
             } catch (error) {
-                console.error('Refresh failed:', error);
+                console.error('Refresh failed:', error.code);
                 setIsLoggedIn(false);
             }
         }
@@ -38,8 +38,9 @@ export function AuthProvider({children}) {
             setIsLoggedIn(true);
             setUsername(username);
         } catch (error) {
-            console.error('Login failed: ', error);
+            console.error('Login failed: ', error.code);
             setIsLoggedIn(false)
+            throw error;
         }
     }, []);
 
@@ -48,7 +49,7 @@ export function AuthProvider({children}) {
         try {
             await api.post(API_ENDPOINTS.LOGOUT);
         } catch (error) {
-            console.error('logout failed: ', error);
+            console.error('logout failed: ', error.code);
         }
         setIsLoggedIn(false);
     }, []);
@@ -61,7 +62,8 @@ export function AuthProvider({children}) {
                 password
             });
         } catch (error) {
-            console.error('signup failed: ', error);
+            console.error('signup failed: ', error.code);
+            throw error;
         }
     }, []);
 

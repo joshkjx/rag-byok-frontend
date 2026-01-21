@@ -70,6 +70,9 @@ export function ChatContainer() {
 
 function ChatDisplay( { displayText, scrollRef } ) {
 
+    const { apiKey } = useSettings();
+    const { isLoggedIn } = useAuth();
+
     useEffect(() => {
         const element = scrollRef.current;
         if (!element) return;
@@ -83,6 +86,7 @@ function ChatDisplay( { displayText, scrollRef } ) {
 
     return (
         <div ref={scrollRef} className = "chatDisplay">
+            {isLoggedIn && !apiKey && <div className="queryResponse error"> Please add an API Key.</div>}
             <div className = "queryResponse">
                 {displayText.map(
                     (msg, index) => {
@@ -110,7 +114,7 @@ function QueryHeader({ currentQuery }) {
 }
 
 function AnswerDisplay( { displayText } ) {
-    return (
+        return (
         <div className="responseText">
             <ReactMarkdown>{displayText}</ReactMarkdown>
         </div>
@@ -120,6 +124,7 @@ function AnswerDisplay( { displayText } ) {
 function ChatBox({ textValue, onChange, onSend }) {
     const textAreaRef = useRef(null);
     const { isLoggedIn } = useAuth();
+    const { apiKey } = useSettings();
 
     function handleChange(e) {
         onChange(e.target.value);
@@ -147,7 +152,7 @@ function ChatBox({ textValue, onChange, onSend }) {
                 placeholder="Ask your question..."
                 rows={1}
                 className="textInput"
-                disabled={!isLoggedIn}/>
+                disabled={!isLoggedIn || !apiKey}/>
             <button className = "chatSendButton" onClick={onSend} disabled={!textValue.trim() || !isLoggedIn}>Ask</button>
         </div>
     );

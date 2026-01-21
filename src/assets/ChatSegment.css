@@ -91,6 +91,10 @@
     margin-bottom: 2rem;
 }
 
+.error {
+    color:red;
+}
+
 .responseText h1, .response-text h2 {
     margin-top: 1em;
 }

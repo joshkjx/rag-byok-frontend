@@ -6,10 +6,13 @@ function LoginForm() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const [loginMessage, setLoginMessage] = useState('');
     const { login, signup } = useAuth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
+        setLoginMessage('');
         try{
             await login(username,password);
             //This will update context and force rerender on success
@@ -20,10 +23,12 @@ function LoginForm() {
 
     const handleSignUp = async (e) => {
         e.preventDefault();
+        setError('');
         try{
             await signup(username,password);
+            setLoginMessage('Signup successful. Go ahead and log in!')
         } catch (err) {
-            setError(err.response?.data?.message || 'Login failed!');
+            setError(err.response?.data?.message || 'Signup failed!');
         }
     }
 
@@ -46,6 +51,7 @@ function LoginForm() {
             />
             <button type="submit">Login</button>
             <button onClick={handleSignUp}>Sign Up</button>
+            {loginMessage && <div className="loginMessage">{loginMessage}</div>}
         </form>
     )
 }
