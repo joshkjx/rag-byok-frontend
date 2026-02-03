@@ -28,6 +28,24 @@ export function AuthProvider({children}) {
         initAuth();
     }, []);
 
+    useEffect(() => {
+        if (!isLoggedIn) return;
+
+        const refreshAccess = async () => {
+            try {
+                const response = await api.post(API_ENDPOINTS.REFRESH);
+                setUsername(response?.data?.username);
+            } catch (error) {
+                console.error('Auto-refresh failed: ', error);
+                setIsLoggedIn(false);
+            }
+        };
+
+        const interval = setInterval(refreshAccess, 14 * 60 * 1000);
+
+        return () => clearInterval(interval);
+    }, [isLoggedIn])
+
     const login = useCallback(
         async (username, password) => {
         try {

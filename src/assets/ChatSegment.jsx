@@ -8,6 +8,7 @@ import {useSettings} from "../hooks/useSettings.js";
 export function ChatContainer() {
     const [displayText, setDisplayText] = useState([]);
     const [currentInput, setCurrentInput] = useState('');
+    const [latestRetrieval, setLatestRetrieval] = useState([]);
     const scrollRef = useRef(null);
 
     const { modelName, modelProvider, apiKey } = useSettings();
@@ -22,8 +23,8 @@ export function ChatContainer() {
         if (!currentInput.trim()) return;
 
         const question = currentInput;
-        console.log("sending: ", currentInput);
         setCurrentInput(''); // Clear textbox after sending
+        setLatestRetrieval([]); // Clear existing sources
 
         // Adds user message to conversation history
         const userMessage = {role: 'user', content: question};
@@ -39,6 +40,12 @@ export function ChatContainer() {
 
         let streamedResponse = '';
         await sendQuery(question, settingsPayload, (data) => {
+            let retrievedDocs = [];
+            if (data.type === 'final_state'){
+                retrievedDocs.push(...data.sources);
+                setLatestRetrieval(retrievedDocs)
+                setTimeout(scrollToBottom,100);
+            }
             if (data.type === 'token'){
                 streamedResponse += data.content;
 
@@ -52,23 +59,24 @@ export function ChatContainer() {
     }
 
     return (
-        <div className = "chatContainer">
+        <div className="chatContainer">
             <ChatDisplay
                 displayText={displayText}
-                scrollRef = {scrollRef}
+                scrollRef={scrollRef}
+                latestRetrieval={latestRetrieval}
             />
-            <div style={{display:"flex", gap:"5px"}}>
-            <ChatBox
-                textValue={currentInput}
-                onChange={setCurrentInput}
-                onSend={handleSend}
-            />
-        </div>
+            <div className="chatBox">
+                <ChatBox
+                    textValue={currentInput}
+                    onChange={setCurrentInput}
+                    onSend={handleSend}
+                />
+            </div>
         </div>
     );
 }
 
-function ChatDisplay( { displayText, scrollRef } ) {
+function ChatDisplay( { displayText, scrollRef, latestRetrieval } ) {
 
     const { apiKey } = useSettings();
     const { isLoggedIn } = useAuth();
@@ -82,7 +90,7 @@ function ChatDisplay( { displayText, scrollRef } ) {
         if (isNearBottom) {
             element.scrollTop = element.scrollHeight;
         }
-    }, [displayText, scrollRef]); // scroll when displaytext changes
+    }, [displayText, latestRetrieval, scrollRef]); // scroll when displaytext changes
 
     return (
         <div ref={scrollRef} className = "chatDisplay">
@@ -98,11 +106,30 @@ function ChatDisplay( { displayText, scrollRef } ) {
                                     {nextMsg?.role === 'assistant' && (
                                         <AnswerDisplay displayText={nextMsg.content}/>
                                     )}
+
                                 </div>
                             );
                         }
                     })}
             </div>
+            {(latestRetrieval.length > 0) && <div className = "retrievalContainer" style={{alignItems:'center'}}>
+                <p>Latest Documents retrieved: </p>
+                {latestRetrieval
+                    .filter((d, index, self) =>
+                    index === self.findIndex(item => item.filename === d.filename && item.page === d.page))
+                    .map(
+                    (d) => {
+                        const doc = d.filename;
+                        const pg = d.page;
+                        const key = `${doc}_${pg}`
+                        return (
+                            <div key={key} style={{display: 'flex', flexDirection:'row', alignContent:'center'}}>
+                                <SourceDisplay sourceName={doc} pageNumber={pg} />
+                            </div>
+                        )
+                    }
+                )}
+            </div>}
         </div>
     );
 }
@@ -117,6 +144,14 @@ function AnswerDisplay( { displayText } ) {
         return (
         <div className="responseText">
             <ReactMarkdown>{displayText}</ReactMarkdown>
+        </div>
+    )
+}
+
+function SourceDisplay( { sourceName, pageNumber } ) {
+    return(
+        <div className="sourceDisplay">
+            {sourceName} ({pageNumber})
         </div>
     )
 }
@@ -143,17 +178,24 @@ function ChatBox({ textValue, onChange, onSend }) {
     }
 
     return (
-        <div className = "chatBox">
+        <div className="chatBoxInner">
             <textarea
-                ref = {textAreaRef}
-                value = {textValue}
+                ref={textAreaRef}
+                value={textValue}
                 onChange={handleChange}
                 onKeyDown={handleKeyDown}
-                placeholder="Ask your question..."
+                placeholder="Ask about your documents..."
                 rows={1}
                 className="textInput"
-                disabled={!isLoggedIn || !apiKey}/>
-            <button className = "chatSendButton" onClick={onSend} disabled={!textValue.trim() || !isLoggedIn}>Ask</button>
+                disabled={!isLoggedIn || !apiKey}
+            />
+            <button
+                className="chatSendButton"
+                onClick={onSend}
+                disabled={!textValue.trim() || !isLoggedIn}
+            >
+                Ask
+            </button>
         </div>
     );
 }

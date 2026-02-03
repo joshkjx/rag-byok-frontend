@@ -1,6 +1,7 @@
 import {useState} from "react";
 import './LoginForm.css';
 import {useAuth} from "../hooks/useAuth.js";
+import {SIGNUP_DISABLED} from "../config/config.js"
 
 function LoginForm() {
     const [username, setUsername] = useState('');
@@ -50,7 +51,7 @@ function LoginForm() {
                 placeholder="Password"
             />
             <button type="submit">Login</button>
-            <button onClick={handleSignUp}>Sign Up</button>
+            <button type="button" onClick={handleSignUp} disabled={SIGNUP_DISABLED}>Sign Up</button>
             {loginMessage && <div className="loginMessage">{loginMessage}</div>}
         </form>
     )

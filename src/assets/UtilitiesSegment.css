@@ -1,31 +1,33 @@
 .tabContainer {
-    display:flex;
+    display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
 .loginContainer {
-    display:flex;
+    display: flex;
     flex-direction: column;
-    flex:1;
-    height:40rem;
-    border: 2px solid;
-    border-radius: 8px;
-    border-color: var(--tabs-border-color);
-    padding: 0.5rem 0.5rem;
+    flex: 1;
+    border-radius: 12px;
+    border: 1px solid var(--tabs-border-color);
+    background-color: var(--bg-primary);
+    padding: 1rem 1.25rem;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.06);
 }
 
 .loginContainer h2 {
     color: var(--default-text-color);
+    margin-bottom: 1rem;
 }
 
 .tabContents {
-    flex:1;
-    height:80rem;
-    border:2px solid;
+    flex: 1;
+    border-radius: 0 0 12px 12px;
+    border: 1px solid var(--border-color-active);
+    border-top: none;
     background-color: var(--bg-primary);
-    border-radius: 0 0 8px 8px;
-    border-color: var(--border-color-active);
-    padding: 0.5rem 0.25rem
+    padding: 0.75rem 0.5rem;
+    overflow: hidden;
 }
 
 .tabs {
@@ -34,18 +36,20 @@
 }
 
 .tabs button {
-    padding: 0.75rem 1.5rem;
-    border:2px solid var(--tabs-border-color);
+    flex: 1;
+    padding: 0.6rem 1.1rem;
+    border: 1px solid var(--tabs-border-color);
     border-bottom-color: var(--border-color-active);
-    border-radius: 8px 8px 0 0;
-    background:var(--bg-secondary);
-    cursor:pointer;
+    border-radius: 12px 12px 0 0;
+    background: var(--bg-secondary);
+    cursor: pointer;
     position: relative;
-    top:2px;
+    top: 2px;
     color: var(--default-text-color);
+    font-size: 0.9rem;
 }
 
-.tabs button:hover{
+.tabs button:hover {
     background: var(--tabs-hover-color);
 }
 
@@ -54,7 +58,7 @@
 }
 
 .tabs button:focus-visible {
-    outline:2px solid var(--tabs-focus-color);
+    outline: 2px solid var(--tabs-focus-color);
     outline-offset: 0.5px;
 }
 
@@ -62,22 +66,81 @@
     background: var(--bg-primary);
     border-bottom: none;
     border-color: var(--border-color-active);
-    font-weight: bold;
+    font-weight: 600;
     z-index: 1;
 }
 
 .documentPane {
-    display:flex;
+    display: flex;
     flex-direction: column;
-    border: 2px solid;
-    border-color: var(--content-pane-border-colour);
-    border-radius: 6px;
-    padding: 5px 5px;
-    gap: 3px;
+    gap: 0.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--content-pane-border-colour);
+    padding: 0.75rem;
+    background-color: var(--bg-secondary);
 }
 
 .documentRow {
-    border: 1px;
-    border-radius: 6px;
-    background-color: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    background-color: var(--bg-primary);
+    border: 1px solid transparent;
+    cursor: default;
+}
+
+.documentRow p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--default-text-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+    flex: 1 1 0;
+}
+
+.upload-btn {
+    margin-top: 0.75rem;
+    padding: 0.6rem 0.9rem;
+    border-radius: 999px;
+    border: 2px solid var(--border-color-active);
+    background-color: var(--bg-primary);
+    color: var(--border-color-active);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    width: 100%;
+}
+
+.upload-btn:hover {
+    background-color: var(--border-color-active);
+    color: var(--text-on-accent);
+    border-color: var(--border-color-active);
+}
+
+.delete-btn {
+    flex-shrink: 0;
+    border-radius: 999px;
+    border: none;
+    background-color: #fee2e2;
+    color: #b91c1c;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+.delete-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
 }

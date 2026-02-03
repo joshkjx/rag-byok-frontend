@@ -10,15 +10,20 @@ export function SettingsPane(){
         setModelProvider,
         modelName,
         setModelName } = useSettings();
+    const {logout} = useAuth();
 
     return (
         <div className="settingsPane">
+            <div className="warningBadge" role="note">
+                We do not store or log your API Keys. Refreshing the page will require you to enter your API Key again.
+            </div>
             <SettingsFieldNestedDropdown firstFieldValue={modelProvider}
                                          firstFieldOnChange={setModelProvider}
                                          secondFieldValue={modelName}
                                          secondFieldOnChange={setModelName}
                                          optionsHashmap={SupportedModels} />
             <SettingsFieldText fieldValue={apiKey} onChange={setApiKey} placeholder="API Key" />
+            <button onClick={logout} style={{alignSelf: 'center'}}> Sign Out </button>
         </div>
     )
 }

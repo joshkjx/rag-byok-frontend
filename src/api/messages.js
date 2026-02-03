@@ -6,7 +6,7 @@ export async function sendQuery(question, settings, onResponseChunk) {
         model_name: settings.model_name,
         provider: settings.provider
     }
-    const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.QUERY}`, { //use fetch here for streaming
+    const response = await fetch(`${API_BASE_URL}${API_ENDPOINTS.QUERY}`, { // we use fetch here for streaming
         method: 'POST',
         credentials: 'include',
         headers: {'Content-Type': 'application/json'},
@@ -35,17 +35,22 @@ export async function sendQuery(question, settings, onResponseChunk) {
 
     const reader = response.body.getReader();
     const decoder = new TextDecoder();
+    let buffer = '';
 
     while (true) {
         const {done, value} = await reader.read();
         if (done) break;
 
-        const chunk = decoder.decode(value);
-        const lines = chunk.split('\n');
+        buffer += decoder.decode(value);
+        const lines = buffer.split('\n');
+        buffer = lines.pop() || '';
 
         for (const line of lines) {
             if (line.startsWith('data')) {
-                const raw = line.slice(6); // get rid of the 'data: ' prefix after decoding
+                const raw = line.slice(5).trim(); // get rid of the 'data: ' prefix after decoding
+
+                if (!raw) continue;
+
                 try {
                     const data = JSON.parse(raw);
                     onResponseChunk(data);
@@ -54,6 +59,18 @@ export async function sendQuery(question, settings, onResponseChunk) {
                     console.error('Error Message: ', e.message);
                 }
             }
+        }
+    }
+
+    if (buffer.trim() && buffer.startsWith('data:')) {
+        const raw = buffer.slice(5).trim();
+        try {
+            const data = JSON.parse(raw);
+            onResponseChunk(data);
+        } catch (e) {
+            console.error('Failed to parse final buffer: ', raw);
+            console.error('Error message: ', e.message);
+
         }
     }
 }

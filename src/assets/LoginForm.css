@@ -1,15 +1,47 @@
 .loginForm {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
 }
+
 .loginForm button {
-    margin-top: 1rem;
-    color:var(--default-text-color);
-    background-color: var(--bg-secondary);
+    margin-top: 0.75rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+}
+
+.loginForm button[type="submit"] {
+    background-color: var(--border-color-active);
+    color: var(--text-on-accent);
+    border-color: transparent;
+}
+
+.loginForm button[type="submit"]:hover {
+    background-color: #b45309;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(217, 119, 6, 0.25);
+}
+
+.loginForm button:not([type="submit"]) {
+    background-color: var(--bg-primary);
+    color: var(--default-text-color);
     border-color: var(--tabs-border-color);
 }
-.loginForm button:hover {
-    border-color: var(--tabs-focus-color);
+
+.loginForm button:not([type="submit"]):hover:not(:disabled) {
+    border-color: var(--border-color-active);
+    background-color: var(--bg-secondary);
+}
+
+.loginForm button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
 }
 
 .loginForm p {
@@ -17,6 +49,15 @@
     color: var(--default-text-color);
     margin-bottom: 0.2rem;
     font-weight: bold;
+}
+
+.loginForm input {
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    border: 1px solid var(--tabs-border-color);
+    background-color: var(--bg-primary);
+    color: var(--default-text-color);
+    font-size: 0.9rem;
 }
 
 .error {

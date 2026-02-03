@@ -1,94 +1,113 @@
 .chatContainer {
     display: flex;
     flex-direction: column;
-    gap: 5px;
+    flex: 1;
+    min-height: 0;
+    border-radius: 12px;
+    border: 1px solid var(--tabs-border-color);
+    background-color: var(--bg-primary);
+    box-shadow: 0 10px 15px -3px rgba(15, 23, 42, 0.08);
+    overflow: hidden;
+    width: 100%;
 }
 
 .chatDisplay {
-    height:500px;
-    width: 800px;
-    border: 2px solid;
-    border-radius: 8px;
-    border-color: var(--tabs-border-color);
+    flex: 1 1 0;
+    min-height: 0;
     overflow-y: auto;
-    padding:0.5rem;
+    overflow-x: hidden;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
     scroll-behavior: smooth;
 }
 
 .chatBox {
-    display: flex;
-    flex:1;
-    min-height: 25px;
-    border: 2px solid;
-    border-radius: 8px;
-    padding: 3px;
-    border-color: var(--tabs-border-color);
-    gap: 5px;
-    align-items: center;
-}
-
-.chatSendButton {
     flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid;
-    border-color: var(--tabs-border-color);
-    background-color: var(--toggle-slider-bg);
-    border-radius: 8px;
-    text-justify: auto;
-    height: fit-content;
-    align-self: flex-start;
+    border-top: 1px solid var(--tabs-border-color);
+    padding: 0.75rem 1rem;
+    background-color: var(--bg-primary);
 }
 
-.chatSendButton:active {
-    background-color: var(--bg-secondary);
+.chatBoxInner {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    background: var(--bg-secondary);
+    border-radius: 999px;
+    border: 1px solid var(--tabs-border-color);
+    padding: 0.5rem 0.75rem;
+    transition: all 0.2s ease;
 }
-.chatSendButton:disabled {
-    cursor: not-allowed;
-    opacity: 0.5;
+
+.chatBoxInner:focus-within {
+    border-color: var(--border-color-active);
+    box-shadow: 0 0 0 3px rgba(217, 119, 6, 0.12);
 }
-.chatSendButton:disabled:active {
-    background-color: var(--toggle-slider-bg);
-}
+
 .textInput {
-    width: 95%;
+    flex: 1;
     border: none;
-    padding: 0 4px;
+    padding: 0.25rem 0.5rem;
     color: var(--default-text-color);
-    background-color: var(--bg-primary);
+    background-color: transparent;
     caret-color: var(--default-text-color);
-    min-height:25px;
-    max-height:300px;
+    min-height: 24px;
+    max-height: 200px;
     font-family: inherit;
-    font-size: 1rem;
-    resize:none;
+    font-size: 0.95rem;
+    resize: none;
 }
 
 .textInput:focus {
     outline: none;
 }
 
-.textInput:focus-visible {
-    outline: var(--tabs-focus-color);
+.textInput::placeholder {
+    color: #9ca3af;
+}
+
+.chatSendButton {
+    flex-shrink: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    border: none;
+    background-color: var(--border-color-active);
+    color: var(--text-on-accent);
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.chatSendButton:hover:not(:disabled) {
+    background-color: #b45309;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 12px rgba(15, 23, 42, 0.15);
+}
+
+.chatSendButton:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
 .stickyQuery {
     position:sticky;
     top:0;
     background: var(--bg-secondary);
-    padding: 0.75rem;
+    padding: 0.75rem 1rem;
     margin-bottom: 1rem;
-    border: 2px solid var(--tabs-border-color);
-    border-radius: 16px;
+    border: 1px solid var(--tabs-border-color);
+    border-radius: 999px;
     z-index: 10;
     color: var(--default-text-color);
     font-weight: bold;
-    box-shadow: 0 -1rem 0 0 var(--bg-primary); /* Extend background upward to cover area above the box.*/
+    box-shadow: 0 -1.5rem 0 0 var(--bg-primary);
 }
 
 .queryResponse {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
 }
 
 .error {
@@ -100,9 +119,9 @@
 }
 
 .responseText {
-    text-align: justify;
+    text-align: left;
     line-height: 1.6;
-    margin-bottom: 3rem
+    margin-bottom: 1.5rem;
 }
 
 .responseText * {
@@ -111,5 +130,31 @@
 
 .qaPair {
     position: relative;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.retrievalContainer {
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--tabs-border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.retrievalContainer p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--default-text-color);
+}
+
+.sourceDisplay {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.15rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--tabs-border-color);
+    background-color: var(--bg-secondary);
+    font-size: 0.75rem;
+    color: var(--default-text-color);
 }

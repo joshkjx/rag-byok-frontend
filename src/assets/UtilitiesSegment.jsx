@@ -35,7 +35,6 @@ export function TabContainer(){
             <div className='tabContents'>
                 {activeTab === 'Documents' && <div> <DocumentPane /> </div>}
                 {activeTab === 'Settings' && <div> <SettingsPane /> </div>}
-                {activeTab === 'Cost' && <div> <p>Cost Dashboard </p> </div>}
             </div>
         </div>
     );

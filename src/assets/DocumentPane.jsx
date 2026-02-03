@@ -1,13 +1,11 @@
 import {useState, useEffect, useCallback, useRef} from "react";
-import {useAuth} from "../hooks/useAuth.js";
 
-import {getDocList, uploadDocument} from "../api/documentsIO.js";
+import {getDocList, uploadDocument, deleteDocument} from "../api/documentsIO.js";
 
 export function DocumentPane() {
     const [documentList, setDocumentList] = useState([]);
-    const [loading, setLoading] = useState(false); // Some additional imports for future features, not used in current build
+    const [loading, setLoading] = useState(false); // This is a stopgap - should probably cache existing list and show that while waiting for api response.
     const [uploading, setUploading] = useState(false);
-    const {username, isLoggedIn} = useAuth();
 
     const fetchDocuments = useCallback(async () =>{
         setLoading(true);
@@ -42,20 +40,28 @@ export function DocumentPane() {
 
     return (
         <div className="documentPane">
+            {loading && <div><p> Loading documents, please wait...</p></div>}
+            {uploading && <div><p> Uploading documents, please wait...</p></div>}
             {documentList?.map(document => {
             return <DocumentRow
                 key={document.document_id}
-                documentName={document.original_filename} />
+                documentName={document.original_filename}
+                documentId={document.document_id}
+                onDelete={fetchDocuments} />
             })}
             <UploadButton onUpload={handleUpload} />
+            <div className="warningBadge" role="note">
+                Documents are stored unencrypted on the cloud. Please do not upload any sensitive documents.
+            </div>
         </div>
     );
 }
 
-function DocumentRow( {documentName} ){
+function DocumentRow( {documentName, documentId, onDelete} ){
     return (
-        <div className="documentRow">
+        <div className="documentRow" style={{display: 'flex', gap: '0.5rem'}}>
             <p>{documentName}</p>
+            <DeleteDocumentButton documentId={documentId} onDelete={onDelete} />
         </div>
     );
 }
@@ -90,4 +96,28 @@ function UploadButton({onUpload}) {
         </>
     );
 
+}
+
+function DeleteDocumentButton({documentId, onDelete}) {
+    const [deleting, setDeleting] = useState(false);
+
+    const handleDelete = async () =>{
+        setDeleting(true);
+        try {
+            await deleteDocument(documentId);
+            onDelete();
+        } catch (e) {
+            console.error('Error deleting document: ', e);
+        } finally {
+            setDeleting(false)
+        }
+    };
+
+    return (
+    <button onClick={handleDelete}
+    className={"delete-btn"}
+    disabled={deleting}>
+        X
+    </button>
+    )
 }

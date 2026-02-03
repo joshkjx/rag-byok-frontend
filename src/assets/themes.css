@@ -1,23 +1,35 @@
 :root {
-    --bg-primary: white;
-    --bg-secondary: #f5f5f5;
-    --border-color-active:#007bff;
-    --tabs-border-color: #a8a7a7;
-    --tabs-hover-color:#cfcbcb;
-    --tabs-focus-color:#007bff;
-    --content-pane-border-colour: rgba(6,4,17,0.45);
-    --toggle-slider-bg:#ccc;
-    --default-text-color:black;
+    /* Surface colors */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+
+    /* Amber accent palette */
+    --border-color-active: #d97706;
+    --text-on-accent: #ffffff;
+    --tabs-border-color: #e5e7eb;
+    --tabs-hover-color: #f3f4f6;
+    --tabs-focus-color: #d97706;
+
+    /* Content + controls */
+    --content-pane-border-colour: rgba(15, 23, 42, 0.08);
+    --toggle-slider-bg: #e5e7eb;
+    --default-text-color: #111827;
+    --warning-badge-bg: rgba(217, 119, 6, 0.1);
 }
 
 :root.dark {
-    --bg-primary: #201f1f;
-    --bg-secondary: #333333;
-    --border-color-active: white;
-    --tabs-border-color: #a8a7a7;
-    --tabs-hover-color: #1e1d1d;
-    --tabs-focus-color:white;
-    --content-pane-border-colour: rgba(220, 220, 223, 0.45);
-    --toggle-slider-bg:#ccc;
-    --default-text-color:white;
+    --bg-primary: #111827;
+    --bg-secondary: #1f2937;
+
+    /* Keep amber accent in dark mode */
+    --border-color-active: #fbbf24;
+    --text-on-accent: #111827;
+    --tabs-border-color: #374151;
+    --tabs-hover-color: #111827;
+    --tabs-focus-color: #fbbf24;
+
+    --content-pane-border-colour: rgba(243, 244, 246, 0.16);
+    --toggle-slider-bg: #4b5563;
+    --default-text-color: #f9fafb;
+    --warning-badge-bg: rgba(251, 191, 36, 0.15);
 }
